@@ -1,5 +1,7 @@
 # [Whitehole](https://github.com/CoPoKo/Whitehole)
 
+[![](https://img.shields.io/npm/v/@copoko/whitehole.svg?style=flat-square)](https://www.npmjs.com/package/@copoko/whitehole)
+
 CoPoKo Whitehole
 
 
