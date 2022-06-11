@@ -1,3 +1,1 @@
-{
-
-}
+{"name":"@copoko/whitehole","version":"0.0.1654944521767","description":"This is @copoko/whitehole","main":"README.md","scripts":{"test":"echo \"Error: no test specified\" && exit 1"},"keywords":["CoPoKo","Whitehole"],"author":"CoPoKo Team","repository":{"type":"git","url":"git+https://github.com/CoPoKo/Whitehole.git"},"bugs":{"url":"https://github.com/CoPoKo/Whitehole/issues"},"homepage":"https://github.com/CoPoKo/Whitehole#readme","license":"GPL-3.0"}
