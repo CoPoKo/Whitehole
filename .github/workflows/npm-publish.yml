@@ -1,0 +1,59 @@
+# /*!
+#  * ==========================================================================
+#  * "CoPoKo Whitehole" License
+#  * GNU General Public License version 3.0 (GPLv3)
+#  * ==========================================================================
+#  * This file is part of "CoPoKo Whitehole"
+#  *
+#  * "CoPoKo Whitehole" is free software: you can redistribute it and/or modify
+#  * it under the terms of the GNU General Public License as published by
+#  * the Free Software Foundation, either version 3 of the License, or
+#  * (at your option) any later version.
+#  *
+#  * "CoPoKo Whitehole" is distributed in the hope that it will be useful,
+#  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  * GNU General Public License for more details.
+#  *
+#  * You should have received a copy of the GNU General Public License
+#  * along with "CoPoKo Whitehole". If not, see <http://www.gnu.org/licenses/>.
+#  * ==========================================================================
+# */
+name: npm-publish
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  npm-publish:
+    if: ${{ contains(github.event.head_commit.message, 'Update:')== true }}
+    name: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org
+      - name: "Automated Version Bump"
+        run: |
+          node npm-version-bump.js
+        env:
+          OOS_VERSION: ${{ github.event.head_commit.message }}
+      - name: Publish
+        run: |
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+      - name: Commit
+        run: |
+          node clean.js
+          git config --global user.email github-actions[bot]@users.noreply.github.com
+          git config --global user.name github-actions
+          git add .
+          git commit -m "Clean" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
